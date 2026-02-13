@@ -3,11 +3,14 @@ import { Direction } from "./types";
 export const GRID_WIDTH = 30;
 export const GRID_HEIGHT = 20;
 export const CELL_SIZE = 20;
+export const CANVAS_WIDTH = GRID_WIDTH * CELL_SIZE;
+export const CANVAS_HEIGHT = GRID_HEIGHT * CELL_SIZE;
 export const INITIAL_SPEED = 100;
 export const MIN_SPEED = 40;
 export const SCORE_PER_FOOD = 10;
 export const INITIAL_SNAKE_LENGTH = 3;
 
+/** Colors used by the Canvas 2D rendering context. */
 export const COLORS = {
   snake: "#22c55e",
   snakeHead: "#4ade80",

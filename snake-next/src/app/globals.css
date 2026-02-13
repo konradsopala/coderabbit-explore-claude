@@ -2,6 +2,15 @@
 
 @theme inline {
   --font-mono: var(--font-geist-mono);
+
+  /* Game-specific theme colors */
+  --color-game-snake: #22c55e;
+  --color-game-snake-head: #4ade80;
+  --color-game-food: #ef4444;
+  --color-game-border: #06b6d4;
+  --color-game-score: #eab308;
+  --color-game-bg: #0f172a;
+  --color-game-grid: #1e293b;
 }
 
 body {

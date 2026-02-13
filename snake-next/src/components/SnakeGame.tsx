@@ -6,11 +6,10 @@ import {
   GRID_WIDTH,
   GRID_HEIGHT,
   CELL_SIZE,
+  CANVAS_WIDTH,
+  CANVAS_HEIGHT,
   COLORS,
 } from "@/lib/constants";
-
-const CANVAS_WIDTH = GRID_WIDTH * CELL_SIZE;
-const CANVAS_HEIGHT = GRID_HEIGHT * CELL_SIZE;
 
 function roundedRect(
   ctx: CanvasRenderingContext2D,
@@ -173,20 +172,12 @@ export default function SnakeGame() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div
-        className="font-mono text-xl font-bold"
-        style={{ color: COLORS.score }}
-      >
+      <div className="font-mono text-xl font-bold text-game-score">
         Score: {score}
       </div>
       <canvas
         ref={canvasRef}
-        className="rounded"
-        style={{
-          width: CANVAS_WIDTH,
-          height: CANVAS_HEIGHT,
-          border: `2px solid ${COLORS.border}`,
-        }}
+        className="w-[600px] h-[400px] rounded border-2 border-game-border"
       />
       <div className="text-sm font-mono text-slate-400">
         Arrow Keys / WASD to move
