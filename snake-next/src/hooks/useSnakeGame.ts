@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Direction, GameState, Position } from "@/lib/types";
 import {
   GRID_WIDTH,
@@ -217,9 +217,24 @@ export function useSnakeGame() {
     }
   }, []);
 
+  // Return immutable snapshots so consumers cannot mutate internal state.
+  // Memoized by renderTick so a new snapshot is only created when the game
+  // state actually changes (i.e., after each tick or state transition).
+  const snakeSnapshot = useMemo(
+    () => snakeRef.current.map((p) => ({ ...p })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [renderTick],
+  );
+
+  const foodSnapshot = useMemo(
+    () => (foodRef.current ? { ...foodRef.current } : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [renderTick],
+  );
+
   return {
-    snake: snakeRef.current,
-    food: foodRef.current,
+    snake: snakeSnapshot,
+    food: foodSnapshot,
     score,
     gameState,
     renderTick,

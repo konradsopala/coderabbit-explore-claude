@@ -36,21 +36,36 @@ function roundedRect(
 
 export default function SnakeGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const dprRef = useRef(1);
+  const isCanvasInitialized = useRef(false);
   const { snake, food, score, gameState, renderTick } = useSnakeGame();
 
+  // One-time canvas setup for high-DPI displays
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || isCanvasInitialized.current) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    dprRef.current = dpr;
+    canvas.width = CANVAS_WIDTH * dpr;
+    canvas.height = CANVAS_HEIGHT * dpr;
+    canvas.style.width = `${CANVAS_WIDTH}px`;
+    canvas.style.height = `${CANVAS_HEIGHT}px`;
+
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      ctx.scale(dpr, dpr);
+    }
+
+    isCanvasInitialized.current = true;
+  }, []);
+
+  // Render loop — draws every frame without touching canvas dimensions
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    // Handle high-DPI displays
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = CANVAS_WIDTH * dpr;
-    canvas.height = CANVAS_HEIGHT * dpr;
-    canvas.style.width = `${CANVAS_WIDTH}px`;
-    canvas.style.height = `${CANVAS_HEIGHT}px`;
-    ctx.scale(dpr, dpr);
 
     // Background
     ctx.fillStyle = COLORS.background;
